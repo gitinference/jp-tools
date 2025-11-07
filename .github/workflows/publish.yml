@@ -5,10 +5,13 @@ on:
     tags:
       # Publish on any tag starting with a `v`, e.g., v0.1.0
       - v*
+    branches:
+      - main
+      - 5-automation
 
 jobs:
   run:
-    runs-on: home-lab
+    runs-on: self-hosted
     environment:
       name: pypi
     permissions:
@@ -25,7 +28,7 @@ jobs:
         run: uv build
       # Check that basic features work and we didn't miss to include crucial files
       - name: Smoke test (wheel)
-        run: uv run --isolated --no-project --with dist/*.whl tests/smoke_test.py
+        run: uv run --isolated --no-project --with dist/*.whl tests/test.py
       - name: Smoke test (source distribution)
         run: uv run --isolated --no-project --with dist/*.tar.gz tests/smoke_test.py
       - name: Publish
