@@ -1,12 +1,12 @@
 [project]
 name = "jp_tools"
-version = "0.1.0"
+version = "0.1.1"
 description = "A simple download hellper to pull files"
 readme = "README.md"
 authors = [{ name = "Alejandro Ouslan", email = "alejandro.ouslan@upr.edu" }]
 requires-python = ">=3.12"
 dependencies = ["requests>=2.32.5", "tqdm>=4.67.1"]
-license = { file = "LICENSE" }
+license = "GPL-3.0-or-later"
 
 [project.scripts]
 jp-utils = "jp_tools:main"
