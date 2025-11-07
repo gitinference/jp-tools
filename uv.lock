@@ -87,7 +87,7 @@ wheels = [
 ]
 
 [[package]]
-name = "jp-utils"
+name = "jp-tools"
 version = "1.0.0"
 source = { editable = "." }
 dependencies = [
