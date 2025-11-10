@@ -54,8 +54,8 @@ Ensure that the Python module {cmd:jp_tools} is available and importable from yo
 
 {title:Author}
 
-{phang}Your Name{p_end}
-{phang}Your Affiliation or Email (optional){p_end}
+{phang}Alejandro Ouslan{p_end}
+{phang}University of Puerto Rico, Mayaguez [alejandro.ouslan@upr.edu]{p_end}
 
 {title:Also see}
 
