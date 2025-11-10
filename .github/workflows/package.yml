@@ -8,11 +8,6 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - name: Regenerate Conda recipe
-        run: |
-          echo "Regenerating Conda recipe from PyPI..."
-          rattler-build generate-recipe pypi jp_tools > recipe.yaml
-
       - name: Build conda package
         uses: prefix-dev/rattler-build-action@v0.2.34
 
