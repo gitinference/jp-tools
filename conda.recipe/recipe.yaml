@@ -1,5 +1,5 @@
 context:
-  version: 0.2.0
+  version: 0.2.1
 
 package:
   name: jp_tools
@@ -7,7 +7,7 @@ package:
 
 source:
 - url: https://pypi.org/packages/source/j/jp_tools/jp_tools-${{ version }}.tar.gz
-  sha256: 5229e3a883eb52ae810b12b4e6cf6252ceefe79b4150e9bca70613f9c5599df0
+  sha256: 3030afff1ab6aeefa4a55a5fbbe2b5bddced8f9f15a7ca064bd81090f5832878
 
 build:
   script: ${{ PYTHON }} -m pip install .
