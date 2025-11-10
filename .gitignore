@@ -185,3 +185,5 @@ notebooks/*
 # vscode
 .vscode
 data_process.log
+
+output/

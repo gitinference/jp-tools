@@ -1,0 +1,19 @@
+name: "Publish to CONDA"
+
+on: [push]
+
+jobs:
+  build:
+    name: Build package
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build conda package
+      uses: prefix-dev/rattler-build-action@v0.2.34
+    - run: |
+        for pkg in $(find output -type f \( -name "*.conda" -o -name "*.tar.bz2" \) ); do
+          echo "Uploading ${pkg}"
+          rattler-build upload anaconda -o gitinference "${pkg}"
+        done
+      env:
+        ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
