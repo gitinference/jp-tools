@@ -7,13 +7,20 @@ jobs:
     name: Build package
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v4
-    - name: Build conda package
-      uses: prefix-dev/rattler-build-action@v0.2.34
-    - run: |
-        for pkg in $(find output -type f \( -name "*.conda" -o -name "*.tar.bz2" \) ); do
-          echo "Uploading ${pkg}"
-          rattler-build upload anaconda -o gitinference "${pkg}"
-        done
-      env:
-        ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
+      - uses: actions/checkout@v4
+      - name: Regenerate Conda recipe
+        run: |
+          echo "Regenerating Conda recipe from PyPI..."
+          rattler-build generate-recipe pypi jp_tools > recipe.yaml
+
+      - name: Build conda package
+        uses: prefix-dev/rattler-build-action@v0.2.34
+
+      - name: Upload packages to Anaconda
+        run: |
+          for pkg in $(find output -type f \( -name "*.conda" -o -name "*.tar.bz2" \) ); do
+            echo "Uploading ${pkg}"
+            rattler-build upload anaconda -o gitinference "${pkg}" --force
+          done
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
