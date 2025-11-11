@@ -1,6 +1,6 @@
 [project]
 name = "jp_tools"
-version = "0.3.0"
+version = "0.3.1"
 description = "A simple download hellper to pull files"
 readme = "README.md"
 authors = [{ name = "Alejandro Ouslan", email = "alejandro.ouslan@upr.edu" }]
