@@ -5,7 +5,7 @@ description = "A simple download hellper to pull files"
 readme = "README.md"
 authors = [{ name = "Alejandro Ouslan", email = "alejandro.ouslan@upr.edu" }]
 requires-python = ">=3.11"
-dependencies = ["requests>=2.32.5", "tqdm>=4.67.1"]
+dependencies = ["requests>=2.32.5", "tqdm>=4.67.1", "urllib3>=2.6.0"]
 license = "GPL-3.0-or-later"
 
 [project.scripts]
