@@ -33,7 +33,6 @@ MANIFEST
 *.ddb
 *.wal
 *.csv
-*.txt
 *.parquet
 
 # PyInstaller
