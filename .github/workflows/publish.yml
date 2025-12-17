@@ -44,9 +44,6 @@ jobs:
 
       - name: Build Conda package
         uses: prefix-dev/rattler-build-action@v0.2.34
-        with:
-          recipe-path: conda.recipe/recipe.yaml
-          build-args: --path .
 
       - name: Upload packages to Anaconda
         run: |
