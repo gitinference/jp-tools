@@ -19,11 +19,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+      # --- Step 1: PyPI ---
       - name: Install uv
         uses: astral-sh/setup-uv@v6
-      - name: Install Python 3.13
-        run: uv python install 3.13
-      - name: Build
-        run: uv build
-      - name: Publish
-        run: uv publish
+      - name: Build & Publish to PyPI
+        run: |
+          uv python install 3.12
+          uv build
+          uv publish
+    # --- Step 2: Conda (using Local Path) ---
+      - name: Build Conda recipe
+        run: rattler-build generate-recipe pypi jp_tools > conda.recipe/recipe.yaml
+      - name: Build Conda package
+        uses: prefix-dev/rattler-build-action@v0.2.34
+
+      - name: Upload packages to Anaconda
+        run: |
+          for pkg in $(find output -type f \( -name "*.conda" -o -name "*.tar.bz2" \) ); do
+            echo "Uploading ${pkg}"
+            rattler-build upload anaconda -o gitinference "${pkg}" --force
+          done
+        env:
+          ANACONDA_API_KEY: ${{ secrets.ANACONDA_API_KEY }}
