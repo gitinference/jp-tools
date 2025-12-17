@@ -2,6 +2,8 @@ on:
   push:
     paths:
       - 'conda.recipe/recipe.yaml'
+    branches:
+      - main
 
 jobs:
   build:
