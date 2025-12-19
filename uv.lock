@@ -692,12 +692,11 @@ wheels = [
 
 [[package]]
 name = "jp-tools"
-version = "0.5.3"
+version = "0.5.4"
 source = { editable = "." }
 dependencies = [
     { name = "requests" },
     { name = "tqdm" },
-    { name = "urllib3" },
 ]
 
 [package.optional-dependencies]
@@ -728,7 +727,6 @@ requires-dist = [
     { name = "polars", marker = "extra == 'extra'", specifier = ">=1.35.2" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "tqdm", specifier = ">=4.67.1" },
-    { name = "urllib3", specifier = ">=2.6.0" },
 ]
 provides-extras = ["extra"]
 
