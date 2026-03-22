@@ -7,7 +7,9 @@ import requests
 from tqdm import tqdm
 
 
-def download(url: str, filename: str, verify: bool = True) -> None:
+def download(
+    url: str, filename: str, verify: bool = True, notify_flag: bool = False
+) -> None:
     """
     Pulls a file from a URL and saves it in the filename. Used by the class to pull external files.
 
@@ -46,6 +48,12 @@ def download(url: str, filename: str, verify: bool = True) -> None:
                         bar.update(
                             len(chunk)
                         )  # Update the progress bar with the size of the chunk
+    if notify_flag:
+        notify(
+            url=str(os.environ.get("URL")),
+            auth=str(os.environ.get("AUTH")),
+            msg=f"Successfully downloaded {filename} from {url}",
+        )
 
 
 def parse_download(url: str, filename: str, verify: bool = True) -> None:
@@ -92,7 +100,11 @@ def parse_download(url: str, filename: str, verify: bool = True) -> None:
 
 
 def batch_download(
-    file_map: dict, max_workers: int = 4, verify: bool = True, parse: bool = False
+    file_map: dict,
+    max_workers: int = 4,
+    verify: bool = True,
+    notify_flag: bool = False,
+    parse: bool = False,
 ):
     """
     Downloads multiple files concurrently. Uses `parse_download` if `parse=True`.
@@ -117,7 +129,10 @@ def batch_download(
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {
-            executor.submit(download_func, url, filename, verify): (url, filename)
+            executor.submit(download_func, url, filename, verify, notify_flag): (
+                url,
+                filename,
+            )
             for url, filename in file_map.items()
         }
 
@@ -127,3 +142,11 @@ def batch_download(
                 future.result()
             except Exception as e:
                 print(f"Failed to download {url}: {e}")
+
+
+def notify(url: str, auth: str, msg: str):
+    requests.post(
+        url,
+        data=msg,
+        headers={"Authorization": auth},
+    )
