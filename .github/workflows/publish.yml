@@ -43,7 +43,7 @@ jobs:
           rattler-build generate-recipe pypi jp_tools > conda.recipe/recipe.yaml
 
       - name: Build Conda package
-        uses: prefix-dev/rattler-build-action@v0.2.34
+        uses: prefix-dev/rattler-build-action@v0.2.37
 
       - name: Upload packages to Anaconda
         run: |
