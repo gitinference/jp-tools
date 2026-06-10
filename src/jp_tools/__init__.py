@@ -1,4 +1,8 @@
-from .utils import download
-from .utils import parse_download
-from .utils import batch_download
-from .utils import notify
+from .utils import batch_download, download, notify, parse_download
+
+__all__ = [
+    "download",
+    "parse_download",
+    "batch_download",
+    "notify",
+]
