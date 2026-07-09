@@ -14,7 +14,7 @@ from rich.progress import (
     TransferSpeedColumn,
 )
 
-# Placeholder or import for notify if it lives elsewhere, 
+# Placeholder or import for notify if it lives elsewhere,
 # though it's defined at the bottom.
 
 
@@ -27,17 +27,6 @@ def download(
 ) -> None:
     """
     Pulls a file from a URL and saves it in the filename using httpx and rich.
-
-    Parameters
-    ----------
-    url: str
-        The URL to pull the file from.
-    filename: str
-        The filename to save the file to.
-    verify: bool
-        If True, verifies the SSL certificate. If False, does not verify the SSL certificate.
-    progress: Optional[Progress]
-        An optional Rich Progress instance for handling concurrent progress bars.
     """
     if os.path.exists(filename):
         return None
@@ -56,8 +45,8 @@ def download(
         local_progress = True
 
     try:
-        # httpx uses 'verify' directly like requests
-        with httpx.Client(verify=verify) as client:
+        # Added follow_redirects=True here to automatically follow HTTP 302 redirects
+        with httpx.Client(verify=verify, follow_redirects=True) as client:
             with client.stream("GET", url) as response:
                 response.raise_for_status()
                 total_size = int(response.headers.get("content-length", 0))
@@ -68,7 +57,6 @@ def download(
                 )
 
                 with open(filename, "wb") as file:
-                    # httpx uses iter_bytes instead of iter_content
                     for chunk in response.iter_bytes(chunk_size=1024 * 1024):
                         file.write(chunk)
                         progress.update(task_id, advance=len(chunk))
@@ -100,10 +88,10 @@ def parse_download(
     import polars as pl
 
     temp_filename = f"{tempfile.gettempdir()}/{hash(filename)}.csv"
-    
+
     # Pass progress down to avoid breaking the UI layout
     download(url=url, filename=temp_filename, verify=verify, progress=progress)
-    
+
     df = pl.read_csv(temp_filename, ignore_errors=True)
     if df.is_empty():
         print(filename)
@@ -157,7 +145,9 @@ def batch_download(
                 try:
                     future.result()
                 except Exception as e:
-                    progress.print(f"[bold red]Failed to download {url}: {e}[/bold red]")
+                    progress.print(
+                        f"[bold red]Failed to download {url}: {e}[/bold red]"
+                    )
 
 
 def notify(url: str, auth: str, msg: str):
@@ -167,3 +157,4 @@ def notify(url: str, auth: str, msg: str):
             content=msg,
             headers={"Authorization": auth},
         )
+
