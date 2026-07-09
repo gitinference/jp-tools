@@ -813,7 +813,7 @@ wheels = [
 
 [[package]]
 name = "jp-tools"
-version = "0.7.7"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "httpx" },
