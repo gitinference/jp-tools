@@ -28,9 +28,6 @@ def download(
     """
     Pulls a file from a URL and saves it in the filename using httpx and rich.
     """
-    if os.path.exists(filename):
-        return None
-
     # Use a local progress bar if a global one wasn't passed in
     local_progress = False
     if progress is None:
@@ -157,4 +154,3 @@ def notify(url: str, auth: str, msg: str):
             content=msg,
             headers={"Authorization": auth},
         )
-
