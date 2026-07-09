@@ -29,7 +29,7 @@ def main():
         url="https://raw.githubusercontent.com/gitinference/jp-tools/refs/heads/main/LICENSE",
         filename="data/raw/DELETE.txt",
     )
-    # jp_tools.batch_download(file_map=data)
+    jp_tools.batch_download(file_map=data)
 
 
 if __name__ == "__main__":
