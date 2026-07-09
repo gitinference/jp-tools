@@ -33,7 +33,13 @@ MANIFEST
 *.ddb
 *.wal
 *.csv
+*.txt
 *.parquet
+*.zip
+*.xlsx
+
+# Exeption for requirements
+!requirements.txt
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -170,19 +176,24 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# ignore data folder
-data/raw/
-data/processed/
-data/external/
-data/qcew
 # ignore mac files
 *.DS_Store
 
 # ignore quarter files 
-notebooks/*
-!notebooks/*.ipynb
 # vscode
 .vscode
 data_process.log
+docs/aux/*
+docs/out/*
+qcew
 
-output/
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
