@@ -24,7 +24,7 @@ def download(
     verify: bool = True,
     notify_flag: bool = False,
     timeout: int = 60,
-    progress: Optional[Progress] = None,
+    headers: dict = {},
 ) -> None:
     """
     Pulls a file from a URL and saves it in the filename using httpx and rich.
@@ -43,7 +43,7 @@ def download(
     try:
         # Added follow_redirects=True here to automatically follow HTTP 302 redirects
         with httpx.Client(
-            verify=verify, follow_redirects=True, timeout=timeout
+            verify=verify, follow_redirects=True, timeout=timeout, headers=headers
         ) as client:
             with client.stream("GET", url) as response:
                 response.raise_for_status()
