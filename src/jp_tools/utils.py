@@ -23,27 +23,28 @@ def download(
     filename: str,
     verify: bool = True,
     notify_flag: bool = False,
+    timeout: int = 60,
     progress: Optional[Progress] = None,
 ) -> None:
     """
     Pulls a file from a URL and saves it in the filename using httpx and rich.
     """
     # Use a local progress bar if a global one wasn't passed in
-    local_progress = False
-    if progress is None:
-        progress = Progress(
-            TextColumn("[bold blue]{task.description}"),
-            BarColumn(),
-            DownloadColumn(),
-            TransferSpeedColumn(),
-            TimeRemainingColumn(),
-        )
-        progress.start()
-        local_progress = True
+    progress = Progress(
+        TextColumn("[bold blue]{task.description}"),
+        BarColumn(),
+        DownloadColumn(),
+        TransferSpeedColumn(),
+        TimeRemainingColumn(),
+    )
+    progress.start()
+    local_progress = True
 
     try:
         # Added follow_redirects=True here to automatically follow HTTP 302 redirects
-        with httpx.Client(verify=verify, follow_redirects=True) as client:
+        with httpx.Client(
+            verify=verify, follow_redirects=True, timeout=timeout
+        ) as client:
             with client.stream("GET", url) as response:
                 response.raise_for_status()
                 total_size = int(response.headers.get("content-length", 0))
