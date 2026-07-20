@@ -1,3 +1,8 @@
+## [1.0.4] - 2026-07-20
+
+### 🚜 Refactor
+
+- *(src/jp_tools/utils.py)* Refactor download function to use httpx and add support for custom headers
 ## [1.0.2] - 2026-07-20
 
 ### 🐛 Bug Fixes
